@@ -11,21 +11,20 @@ from apps.logistics.models import Package
 from apps.logistics.serializers import PackageSerializer
 
 from apps.user.models import Client, Carrier
-from apps.user.serializers import ClientSerializer, CarrierSerializer
 
 
 class fetchPackageByClient(generics.ListAPIView):
-    serializer_class = ClientSerializer
+    serializer_class = PackageSerializer
     permission_classes = [AllowAny] #IsAuthenticated
-    def get_queryset(self, username):
-        client = Client.objects.get(username=username)
+    def get_queryset(self, id):
+        client = Client.objects.get(id=id)
         data = Package.objects.filter(client=client).order_by('-id')
         return data
 
     def get(self, request, *args, **kwargs):
         try:
-            username = request.data.get('username', '')
-            queryset = self.get_queryset(username)
+            id = request.data.get('id', '')
+            queryset = self.get_queryset(id)
             serialized_data = self.serializer_class(queryset, many=True).data
             return Response(serialized_data)
         
@@ -37,17 +36,17 @@ class fetchPackageByClient(generics.ListAPIView):
 
 
 class fetchPackageByCarrier(generics.ListAPIView):
-    serializer_class = CarrierSerializer
+    serializer_class = PackageSerializer
     permission_classes = [AllowAny] #IsAuthenticated
-    def get_queryset(self, username):
-        carrier = Carrier.objects.get(username=username)
+    def get_queryset(self, id):
+        carrier = Carrier.objects.get(id=id)
         data = Package.objects.filter(carrier=carrier).order_by('-id')
         return data
 
     def get(self, request, *args, **kwargs):
         try:
-            username = request.data.get('username', '')
-            queryset = self.get_queryset(username)
+            id = request.data.get('id', '')
+            queryset = self.get_queryset(id)
             serialized_data = self.serializer_class(queryset, many=True).data
             return Response(serialized_data)
         
@@ -63,26 +62,73 @@ class requestPackage(generics.GenericAPIView):
     permission_classes = [AllowAny] #IsAuthenticated
 
     def post(self, request, *args, **kwargs):
-
-        carrier = request.data.get('carrier', '')
-        client = request.data.get('client', '')
-
-        weight = request.data.get('weight', '')
-        height = request.data.get('height', '')
-        width = request.data.get('width', '')
-        depth = request.data.get('depth', '')
-
-        source = request.data.get('source', '')
-        address = request.data.get('address', '')
-
-        data1 = {'carrier':carrier,'client':client,'weight':weight,'height':height,'width':width,'depth':depth,'source':source,'address':address }
-        data2 = request.data.copy()
-
         try:
-            return Response({'data1': data1}, status=status.HTTP_200_OK)
+            data = request.data.copy()
+            data['carrier'] = Carrier.objects.get(id=data['carrier']) if data['carrier'] else None
+            data['client'] = Client.objects.get(id=data['client'])
+            Package.objects.create(**data) 
+            return Response({'success': 'The package has been create'}, status=status.HTTP_201_CREATED)
         
         except Exception as e:
             date = timezone.now().strftime("%Y-%m-%d %H:%M")
             with open(os.path.join(settings.BASE_DIR, 'logs/core.log'), 'a') as f:
                 f.write("requestPackage {} --> Error: {}\n".format(date, str(e)))
-            return Response({'error': 'NotFound Package.'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({'error': 'NotFound Package.'}, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request, *args, **kwargs):
+        try:
+            data = request.data.copy()
+            data['client'] = Client.objects.get(id=data['client'])
+            data['carrier'] = Carrier.objects.get(id=data['carrier'])
+            obj = Package.objects.get(id=data['id'])
+
+            for key, value in data.items():
+                setattr(obj, key, value)
+            obj.save()
+
+            return Response({'success': 'The package has been updated'}, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            date = timezone.now().strftime("%Y-%m-%d %H:%M")
+            with open(os.path.join(settings.BASE_DIR, 'logs/core.log'), 'a') as f:
+                f.write("requestPackage {} --> Error: {}\n".format(date, str(e)))
+            return Response({'error': 'NotFound Package.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+    def delete(self, request, *args, **kwargs):
+        try:
+            data = request.data.copy()
+            package = Package.objects.get(id=data['id'])
+            package.delete()
+
+            return Response({'success': 'The package has been deleted'}, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            date = timezone.now().strftime("%Y-%m-%d %H:%M")
+            with open(os.path.join(settings.BASE_DIR, 'logs/core.log'), 'a') as f:
+                f.write("requestPackage {} --> Error: {}\n".format(date, str(e)))
+            return Response({'error': 'NotFound Package.'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class assignPackageToCarrier(generics.ListAPIView):
+    serializer_class = PackageSerializer
+    permission_classes = [AllowAny] #IsAuthenticated
+
+    def put(self, request, *args, **kwargs):
+        try:
+            data = request.data.copy()
+            data['client'] = Client.objects.get(id=data['client'])
+            data['carrier'] = Carrier.objects.get(id=data['carrier'])
+            obj = Package.objects.get(id=data['id'])
+
+            for key, value in data.items():
+                setattr(obj, key, value)
+            obj.save()
+
+            return Response({'success': 'The package has been assigned'}, status=status.HTTP_200_OK)
+        
+        except Exception as e:
+            date = timezone.now().strftime("%Y-%m-%d %H:%M")
+            with open(os.path.join(settings.BASE_DIR, 'logs/core.log'), 'a') as f:
+                f.write("assignPackageToCarrier {} --> Error: {}\n".format(date, str(e)))
+            return Response({'error': 'NotFound Package.'}, status=status.HTTP_400_BAD_REQUEST)

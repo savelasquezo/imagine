@@ -1,7 +1,7 @@
 from rest_framework import serializers
-import apps.logistics.models as models
+from apps.logistics.models import Package
 
 class PackageSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Package
+        model = Package
         fields = '__all__'
