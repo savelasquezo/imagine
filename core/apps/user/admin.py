@@ -1,7 +1,8 @@
 from django.contrib import admin
-from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+from django.contrib.auth.admin import UserAdmin
+from django.conf.locale.es import formats as es_formats
 
-import apps.user.models as models
+from apps.user.models import Account, Client, Carrier
 
 class MyAdminSite(admin.AdminSite):
     index_title = 'Administrativa'
@@ -14,7 +15,7 @@ admin_site.site_header = "Imagine"
 
 
 
-class AccountAdmin(BaseUserAdmin):
+class AccountAdmin(UserAdmin):
     list_display = ('username', 'email','address','phone')
     search_fields = ('username', 'email')
 
@@ -32,7 +33,7 @@ class AccountAdmin(BaseUserAdmin):
         ),
         ("", {"fields": 
             (('username','date_joined'),
-             ('first_name','last_name'))
+             ('first_name','last_name'),)
             }   
         ),
         ("Detalles", {"fields": 
@@ -56,8 +57,64 @@ class AccountAdmin(BaseUserAdmin):
         self.inlines = []
         return fieldsets
 
-    def get_readonly_fields(self, request, obj=None):
-        return ['username','email','date_joined']
+
+class ClientAdmin(admin.ModelAdmin):
+    list_display = (
+        'username',
+        'email',
+        'company',
+        'nit',
+        'is_active'
+        )
+
+    list_filter = ['is_active']
+    search_fields = ['username']
+
+    es_formats.DATETIME_FORMAT = "d M Y"
+    
+    Info = {'fields': (
+            ('first_name','last_name'),
+            ('address','phone'),
+            ('date_joined','last_joined'),
+    )}
+
+    fieldsets = (
+            ("", {"fields": (('username','email'),)}),
+            ("", {"fields": (('company','nit'),)}),
+            ("", Info),
+    )
 
 
-admin.site.register(models.Account, AccountAdmin)
+
+class CarrierAdmin(admin.ModelAdmin):
+    list_display = (
+        'username',
+        'email',
+        'vehicle_type',
+        'license',
+        'is_active'
+        )
+
+    list_filter = ['is_active']
+    search_fields = ['username']
+
+    es_formats.DATETIME_FORMAT = "d M Y"
+
+
+    Info = {'fields': (
+            ('first_name','last_name'),
+            ('address','phone'),
+            ('date_joined','last_joined'),
+    )}
+
+    fieldsets = (
+            ("", {"fields": (('username','email'),)}),
+            ("", {"fields": (('vehicle_type','license'),)}),
+            ("", Info),
+    )
+
+
+
+admin.site.register(Account, AccountAdmin)
+admin.site.register(Client, ClientAdmin)
+admin.site.register(Carrier, CarrierAdmin)

@@ -14,15 +14,13 @@ class UserSerializer(UserCreateSerializer):
         fields = ['username','email']
 
 class ClientSerializer(serializers.ModelSerializer):
-    model = Client
-    class Meta(UserCreateSerializer.Meta):
-        model = User
+    class Meta:
+        model = Client
         fields = '__all__'
 
 class CarrierSerializer(serializers.ModelSerializer):
-    model = Carrier
-    class Meta(UserCreateSerializer.Meta):
-        model = User
+    class Meta:
+        model = Carrier
         fields = '__all__'
 
 

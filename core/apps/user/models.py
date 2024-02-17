@@ -25,7 +25,7 @@ class AccountManager(BaseUserManager):
 
 class Account(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(_("ID"),default=uuid.uuid4, unique=True, primary_key=True)
-    username = models.CharField(_("Usuario"),max_length=64, unique=True)
+    username = models.CharField(_("Usuario"), unique=True, max_length=64)
     email = models.EmailField(_("Email"),unique=True, null=False, blank=False)
 
     first_name = models.CharField(_('Nombre'), max_length=128, null=True, blank=True)
@@ -42,25 +42,24 @@ class Account(AbstractBaseUser, PermissionsMixin):
 
     objects = AccountManager()
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['email']
 
     def __str__(self):
-        return f"{self.email}"
+        return f"{self.username}"
 
     class Meta:
-        indexes = [models.Index(fields=['email']),]
+        indexes = [models.Index(fields=['username']),]
         verbose_name = _("Usuario")
         verbose_name_plural = _("Usuarios")
 
 
 class Client(Account):
-
-    company = models.CharField(_('Empresa'), choices=types, max_length=256, null=False, blank=True)
-    vip = models.BooleanField(_("¿VIP?"),default=False)
+    company = models.CharField(_('Empresa'), max_length=256, null=False, blank=True)
+    nit = models.CharField(_('NIT/RUT'), max_length=256, null=False, blank=True)
 
     def __str__(self):
-        return f"{self.email}"
+        return f"{self.username}"
 
     class Meta:
         verbose_name = _("Cliente")
@@ -68,12 +67,11 @@ class Client(Account):
 
 
 class Carrier(Account):
-
     vehicle_type = models.CharField(_('Vehiculo'), choices=types, max_length=256, null=False, blank=True)
-    license = models.CharField(_('Placa'), max_length=256, null=False, blank=True)
+    license = models.CharField(_('Placa'),unique=True, max_length=256, null=False, blank=True)
 
     def __str__(self):
-        return f"{self.email}"
+        return f"{self.username}"
 
     class Meta:
         verbose_name = _("Transportista")
