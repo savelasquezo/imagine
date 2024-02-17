@@ -22,6 +22,6 @@ application = get_asgi_application()
 
 
 application = ProtocolTypeRouter({
-    "http": application,
+    "http": application
     }
 )

@@ -32,7 +32,7 @@ class Package(models.Model):
     date_joined = models.DateField(_("Fecha de Ingreso"), default=timezone.now)
     date_delivery = models.DateField(_("Fecha de Entrega"), default=timezone.now)
 
-    is_paid = models.BooleanField(_("¿Pagado?"),default=True)
+    is_paid = models.BooleanField(_("¿Pagado?"),default=False)
 
     def __str__(self):
         return f"{self.id}"

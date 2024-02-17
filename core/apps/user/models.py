@@ -49,6 +49,7 @@ class Account(AbstractBaseUser, PermissionsMixin):
         return f"{self.email}"
 
     class Meta:
+        indexes = [models.Index(fields=['email']),]
         verbose_name = _("Usuario")
         verbose_name_plural = _("Usuarios")
 
@@ -62,7 +63,6 @@ class Client(Account):
         return f"{self.email}"
 
     class Meta:
-        indexes = [models.Index(fields=['email']),]
         verbose_name = _("Cliente")
         verbose_name_plural = _("Clientes")
 
@@ -76,6 +76,5 @@ class Carrier(Account):
         return f"{self.email}"
 
     class Meta:
-        indexes = [models.Index(fields=['email']),]
         verbose_name = _("Transportista")
         verbose_name_plural = _("Transportistas")

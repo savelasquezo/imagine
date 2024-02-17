@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 import os.path
-from dotenv import load_dotenv
+import environ
 
 from pathlib import Path
 from datetime import timedelta
@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-load_dotenv()
+environ.Env.read_env()
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 
@@ -83,6 +83,7 @@ THIRD_APPS = [
 ]
 
 CORE_APPS = [
+    'apps.user',
     'apps.logistics',
 ]
 
