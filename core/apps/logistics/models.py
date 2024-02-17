@@ -4,11 +4,16 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.utils import timezone
 
+from apps.user.models import Carrier, Client
+
 states = (('hold','Pendiente'),('delivered','Entregado'),('refused','Devuelto'))
 
 class Package(models.Model):
 
     id = models.UUIDField(_("ID"),default=uuid.uuid4, unique=True, primary_key=True)
+
+    carrier = models.ForeignKey(Carrier, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
 
     weight = models.FloatField(_("Peso"), null=False, blank=False,
         help_text="Peso (kg)")
@@ -33,6 +38,6 @@ class Package(models.Model):
         return f"{self.id}"
 
     class Meta:
+        indexes = [models.Index(fields=['id','carrier','client']),]
         verbose_name = _("Producto")
         verbose_name_plural = _("Productos")
-

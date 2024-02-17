@@ -14,7 +14,7 @@ admin_site.site_header = "Imagine"
 
 
 
-class UserAccountAdmin(BaseUserAdmin):
+class AccountAdmin(BaseUserAdmin):
     list_display = ('username', 'email','city','phone')
     search_fields = ('username', 'email')
 
@@ -59,4 +59,4 @@ class UserAccountAdmin(BaseUserAdmin):
         return ['username','email','date_joined']
 
 
-admin.site.register(models.Account, UserAccountAdmin)
+admin.site.register(models.Account, AccountAdmin)
