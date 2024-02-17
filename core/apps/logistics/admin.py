@@ -17,7 +17,7 @@ class PackageAdmin(admin.ModelAdmin):
     
     fieldsets = (
         ("", {"fields": 
-            (('uuid'),
+            (('id'),
              ('carrier','client'),
              ('source','address'))
             }
@@ -31,7 +31,7 @@ class PackageAdmin(admin.ModelAdmin):
     list_filter=['state','is_paid']
     es_formats.DATETIME_FORMAT = "d M Y"
 
-    readonly_fields=['uuid','carrier','client']
+    readonly_fields=['id','carrier','client']
 
 admin.site.register(models.Package, PackageAdmin)
 

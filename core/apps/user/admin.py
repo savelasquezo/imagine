@@ -15,7 +15,7 @@ admin_site.site_header = "Imagine"
 
 
 class AccountAdmin(BaseUserAdmin):
-    list_display = ('username', 'email','city','phone')
+    list_display = ('username', 'email','address','phone')
     search_fields = ('username', 'email')
 
     fieldsets = (
@@ -31,11 +31,12 @@ class AccountAdmin(BaseUserAdmin):
             }
         ),
         ("", {"fields": 
-            (('username','date_joined'),)
+            (('username','date_joined'),
+             ('first_name','last_name'))
             }   
         ),
         ("Detalles", {"fields": 
-            (('city','street','phone'),)
+            (('address','phone'),)
             }
         ),
     )

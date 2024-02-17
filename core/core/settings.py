@@ -12,11 +12,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 import os
 import os.path
-from dotenv import load_dotenv
+import environ
 
 from pathlib import Path
 from datetime import timedelta
 
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-load_dotenv()
+
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 
@@ -83,6 +84,7 @@ THIRD_APPS = [
 ]
 
 CORE_APPS = [
+    'apps.user',
     'apps.logistics',
 ]
 
@@ -91,7 +93,6 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + CORE_APPS
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",

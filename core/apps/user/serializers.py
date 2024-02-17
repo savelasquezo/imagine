@@ -7,7 +7,7 @@ User = get_user_model()
 class UserSerializer(UserCreateSerializer):
     class Meta(UserCreateSerializer.Meta):
         model = User
-        fields = ["username","email"]
+        fields = ['username','email']
 
 class CustomPasswordResetConfirmSerializer(PasswordResetConfirmSerializer):
     def build_password_reset_confirm_url(self, uid, token):

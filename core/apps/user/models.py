@@ -1,6 +1,6 @@
 import uuid
 
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, AbstractUser
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
@@ -49,20 +49,20 @@ class Account(AbstractBaseUser, PermissionsMixin):
         return f"{self.email}"
 
     class Meta:
+        indexes = [models.Index(fields=['email']),]
         verbose_name = _("Usuario")
         verbose_name_plural = _("Usuarios")
 
 
 class Client(Account):
 
-    company = models.CharField(_('Vehiculo'), choices=types, max_length=256, null=False, blank=True)
+    company = models.CharField(_('Empresa'), choices=types, max_length=256, null=False, blank=True)
     vip = models.BooleanField(_("¿VIP?"),default=False)
 
     def __str__(self):
         return f"{self.email}"
 
     class Meta:
-        indexes = [models.Index(fields=['email']),]
         verbose_name = _("Cliente")
         verbose_name_plural = _("Clientes")
 
@@ -76,6 +76,5 @@ class Carrier(Account):
         return f"{self.email}"
 
     class Meta:
-        indexes = [models.Index(fields=['email']),]
         verbose_name = _("Transportista")
         verbose_name_plural = _("Transportistas")
