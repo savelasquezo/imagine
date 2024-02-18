@@ -144,6 +144,10 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
                         <th scope="col" className=" px-6 py-2">Codigo</th>
                         <th scope="col" className=" px-6 py-2">Transportista</th>
                         <th scope="col" className=" px-6 py-2">Cliente</th>
+                        <th scope="col" className=" px-6 py-2">Peso</th>
+                        <th scope="col" className=" px-6 py-2">Alto</th>
+                        <th scope="col" className=" px-6 py-2">Ancho</th>
+                        <th scope="col" className=" px-6 py-2">Largo</th>
                         <th scope="col" className=" px-6 py-2"></th>
                       </tr>
                     </thead>
@@ -153,6 +157,10 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
                             <td className="whitespace-nowrap px-6 py-2 font-Courier font-semibold">{obj.code}</td>
                             <td className="whitespace-nowrap px-6 py-2 hidden sm:table-cell">{obj.carrier?.username ?? "N/A"}</td>
                             <td className="whitespace-nowrap px-6 py-2">{obj.client.username}</td>
+                            <td className="whitespace-nowrap px-6 py-2">{obj.weight}</td>
+                            <td className="whitespace-nowrap px-6 py-2">{obj.height}</td>
+                            <td className="whitespace-nowrap px-6 py-2">{obj.width}</td>
+                            <td className="whitespace-nowrap px-6 py-2">{obj.depth}</td>
                             <td className="whitespace-nowrap px-6 py-2 flex justify-center gap-x-2">
                               <button onClick={() => openModal('put', obj)} className="text-base text-yellow-600 hover:text-yellow-800 transition-colors duration-300"><FaPencilAlt /></button>
                               <button onClick={() => openModal('del', obj)} className="text-lg text-red-600 hover:text-red-800 transition-colors duration-300"><AiFillDelete /></button>
