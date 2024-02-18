@@ -33,7 +33,7 @@ const DeletePackageModal: React.FC<SessionModal & { selectedPackageId: string | 
     };
 
     return (
-        <div className='w-full h-full'>
+        <div className='w-full h-full bg-red-400'>
             <p> El valorsss {selectedPackageId}</p>
             {loading ? (
             <button type="button" className="h-10 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-md py-2 px-4 w-full text-center flex items-center justify-center">
