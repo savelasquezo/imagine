@@ -11,7 +11,7 @@ from apps.logistics.models import Package
 from apps.logistics.serializers import PackageSerializer
 
 def getAsyncPackage():
-    queryset = Package.objects.all()
+    queryset = Package.objects.all().order_by("-id")
     serializer = PackageSerializer(queryset, many=True)
     return serializer.data
 

@@ -13,6 +13,21 @@ from apps.logistics.serializers import PackageSerializer
 from apps.user.models import Client, Carrier
 
 
+class LambdaChallenge(generics.ListAPIView):
+    permission_classes = [AllowAny] #IsAuthenticated
+    def get(self, request, *args, **kwargs):
+        try:
+            calcVolumen = lambda package: package.height * package.width * package.depth
+            data = Package.objects.all()
+            listVolumen = list(map(calcVolumen, data))
+            return Response({'LambdaVols': listVolumen}, status=status.HTTP_200_OK)
+        except Exception as e:
+            eDate = timezone.now().strftime("%Y-%m-%d %H:%M")
+            with open(os.path.join(settings.BASE_DIR, 'logs/core.log'), 'a') as f:
+                f.write("LambdaChallenge {} --> Error: {}\n".format(eDate, str(e)))
+            return Response({'error': 'NotFound Packages'}, status=status.HTTP_404_NOT_FOUND)
+
+
 class fetchPackageByClient(generics.ListAPIView):
     serializer_class = PackageSerializer
     permission_classes = [AllowAny] #IsAuthenticated
@@ -81,7 +96,6 @@ class requestPackage(generics.GenericAPIView):
             data['client'] = Client.objects.get(id=data['client'])
             data['carrier'] = Carrier.objects.get(id=data['carrier'])
             obj = Package.objects.get(id=data['id'])
-
             for key, value in data.items():
                 setattr(obj, key, value)
             obj.save()
@@ -119,6 +133,7 @@ class assignPackageToCarrier(generics.ListAPIView):
             data = request.data.copy()
             data['client'] = Client.objects.get(id=data['client'])
             data['carrier'] = Carrier.objects.get(id=data['carrier'])
+
             obj = Package.objects.get(id=data['id'])
 
             for key, value in data.items():

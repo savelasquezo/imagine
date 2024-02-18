@@ -37,12 +37,12 @@ export type ClientData = {
 }
 
 export type PackageData = {
-    id: numer;
+    id: number;
     code: string;
-    weight: numer;
-    height: numer;
-    width: numer;
-    depth: numer;
+    weight: number;
+    height: number;
+    width: number;
+    depth: number;
     source: string;
     address: string;
     state: string;

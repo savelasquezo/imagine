@@ -19,13 +19,13 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
   const [closingModal, setClosingModal] = useState(false);
 
   const [activeTab, setActiveTab] = useState('');
-  const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
+  const [selectedObject, setSelectedObject] = useState<PackageData>();
 
-  const openModal = (tab: string, id?: string) => {
+  const openModal = (tab: string, obj?: PackageData) => {
     setShowModal(true);
     setActiveTab(tab);
-    if (id) {
-      setSelectedObjectId(id)
+    if (obj) {
+      setSelectedObject(obj)
     }
   };
 
@@ -82,8 +82,18 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
   return (
     <div className="w-full h-full ">
       {!session?.user ? (
-        <div className="">
-          <p>Aun no has iniciado session</p>
+        <div className="w-full h-full flex flex-col justify-start items-center mt-8 px-16">
+          <p className="font-bold text-3xl text-slate-700">IMAGINE</p><br />
+          <p className="text-sm">
+            La aplicacion esta desarrollada con el fin de validar los conocimientos tecnicos, para la vacante de Senior Fullstack con Python
+            se opto por hacer una API-RestFull con WebShockets para la visualizacion de la Informacio, para mayor comodidad la interfaz completa
+            esta integrada en una unica vista, Asi como el CRUD referente a la aplicacion "logistics" solicitada. <br /><br />
+            La logica del proyecto se realizo con Django REST en Modo ASGI, Gestionado por Djoser con JWT para la gestion de Usuarios, comunicado con
+            una interfaz desarrolada en Javascrypt haciendo uso de React con NextJs. El repositorio del proyecto se encuentra en GitHub el cual contiene
+            El archivo README.md donde se especifica el paso a paso para la instalacion del proyecto, en caso de un inconveniente no previsto favor comunicarmelo. <br /><br />
+            GitHub-<a href="https://github.com/savelasquezo/imagine" className="text-blue-800 font-semibold">https://github.com/savelasquezo/imagine</a><br />
+           <span className="text-xs">El repositorio ya incluye las variables de entorno .env para mayor facilidad en la revision del proyecto</span>
+          </p>
         </div>
       ) : (
           <div className={`w-11/12 h-[calc(100vh-7rem)] mx-auto mt-5 flex justify-between items-center  ${!session?.user? "animate-fade-out animate__animated animate__fadeOut": "animate-fade-in animate__animated animate__fadeIn"}`}>
@@ -123,8 +133,8 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
                             <td className="whitespace-nowrap px-6 py-2 hidden sm:table-cell">{obj.carrier?.username ?? "N/A"}</td>
                             <td className="whitespace-nowrap px-6 py-2">{obj.client.username}</td>
                             <td className="whitespace-nowrap px-6 py-2 flex justify-center gap-x-2">
-                              <button onClick={() => openModal('put', obj.id)} className="text-base text-yellow-600 hover:text-yellow-800 transition-colors duration-300"><FaPencilAlt /></button>
-                              <button onClick={() => openModal('put', obj.id)} className="text-lg text-red-600 hover:text-red-800 transition-colors duration-300"><AiFillDelete /></button>
+                              <button onClick={() => openModal('put', obj)} className="text-base text-yellow-600 hover:text-yellow-800 transition-colors duration-300"><FaPencilAlt /></button>
+                              <button onClick={() => openModal('del', obj)} className="text-lg text-red-600 hover:text-red-800 transition-colors duration-300"><AiFillDelete /></button>
                             </td>
                           </tr>
                         ))}
@@ -141,14 +151,14 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
                     className={"absolute bottom-5 left-0 w-full flex flex-row items-center justify-center gap-x-2"}
                     pageClassName={"bg-gray-500 text-white rounded-full !px-3 !py-0 transition-colors duration-300"}
                     activeClassName={"bg-gray-500 text-white rounded-full !px-3 !py-0 transition-colors duration-300"}
-                    previousClassName={"absolute left-5 bg-gray-500 rounded-full p-1 transition-colors duration-300"}
+                    previousClassName={"absolute left-5 bg-gray-500 text-white rounded-full p-1 transition-colors duration-300"}
                     nextClassName={"absolute right-5 bg-gray-500 text-white rounded-full p-1 transition-colors duration-300"}
                   />
                 </div>
               ) : (
                 <div className="w-full h-full flex flex-col justify-center items-center -mt-10">
                   <p className="text-center text-gray-800 text-sm">
-                    ¡Aun No hay Historial disponible de Paquetes Enviados!
+                    ¡Aun No hay registros disponible de Paquetes!
                   </p>
                 </div>
               )}
@@ -159,14 +169,14 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
       <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center transition bg-opacity-50 bg-slate-300 backdrop-blur-sm z-40 ${closingModal ? "animate-fade-out animate__animated animate__fadeOut" : "animate-fade-in animate__animated animate__fadeIn"}`}>
           <div className={`relative w-11/12 sm:w-3/5 md:w-3/5 lg:w-2/5 max-w-[40rem] bg-white rounded-lg p-6 lg:pb-2`}>
               <button onClick={closeModal} className='absolute z-10 top-4 right-4 text-xl text-red-900 hover:text-gray-600 transition-colors duration-300' ><AiOutlineClose /></button>
-              <div className={`h-96 ${activeTab === 'add' ? 'block' : 'hidden'}`}>
+              <div className={`h-full ${activeTab === 'add' ? 'block' : 'hidden'}`}>
                 <CreatePackageModal closeModal={closeModal} session={session}/>
               </div>
-              <div className={`h-96 ${activeTab === 'put' ? 'block' : 'hidden'}`}>
-                <UpdatePackageModal closeModal={closeModal} session={session} selectedPackageId={selectedObjectId} />
+              <div className={`h-full ${activeTab === 'put' ? 'block' : 'hidden'}`}>
+                <UpdatePackageModal closeModal={closeModal} session={session} selectedPackage={selectedObject} />
               </div>
-              <div className={`h-32 ${activeTab === 'del' ? 'block' : 'hidden'}`}>
-                <DeletePackageModal closeModal={closeModal} session={session} selectedPackageId={selectedObjectId} />
+              <div className={`h-full ${activeTab === 'del' ? 'block' : 'hidden'}`}>
+                <DeletePackageModal closeModal={closeModal} session={session} selectedPackage={selectedObject} />
               </div>
           </div>
         </div>

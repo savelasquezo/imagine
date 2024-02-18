@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.18",
+    "@heroicons/react": "^2.1.1",
     "animate.css": "^4.1.1",
     "dotenv": "^16.4.4",
     "jsonwebtoken": "^9.0.2",
