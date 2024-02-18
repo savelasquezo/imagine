@@ -153,14 +153,14 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
                     </thead>
                     <tbody>
                       {filteredList?.slice(pageNumber * pageElements,(pageNumber + 1) * pageElements).map((obj, index) => (
-                          <tr key={index} className="border-b border-slate-700 uppercase text-xs text-gray-800">
+                          <tr key={index} className="border-b border-slate-700 text-xs text-gray-800">
                             <td className="whitespace-nowrap px-6 py-2 font-Courier font-semibold">{obj.code}</td>
                             <td className="whitespace-nowrap px-6 py-2 hidden sm:table-cell">{obj.carrier?.username ?? "N/A"}</td>
                             <td className="whitespace-nowrap px-6 py-2">{obj.client.username}</td>
-                            <td className="whitespace-nowrap px-6 py-2">{obj.weight}</td>
-                            <td className="whitespace-nowrap px-6 py-2">{obj.height}</td>
-                            <td className="whitespace-nowrap px-6 py-2">{obj.width}</td>
-                            <td className="whitespace-nowrap px-6 py-2">{obj.depth}</td>
+                            <td className="whitespace-nowrap px-6 py-2">{obj.weight}g</td>
+                            <td className="whitespace-nowrap px-6 py-2">{obj.height}cm</td>
+                            <td className="whitespace-nowrap px-6 py-2">{obj.width}cm</td>
+                            <td className="whitespace-nowrap px-6 py-2">{obj.depth}cm</td>
                             <td className="whitespace-nowrap px-6 py-2 flex justify-center gap-x-2">
                               <button onClick={() => openModal('put', obj)} className="text-base text-yellow-600 hover:text-yellow-800 transition-colors duration-300"><FaPencilAlt /></button>
                               <button onClick={() => openModal('del', obj)} className="text-lg text-red-600 hover:text-red-800 transition-colors duration-300"><AiFillDelete /></button>

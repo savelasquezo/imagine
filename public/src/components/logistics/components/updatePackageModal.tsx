@@ -58,10 +58,10 @@ const UpdatePackageModal: React.FC<SessionModal & { selectedPackage?: PackageDat
     const [listClient, setListClient] = useState<ClientData[]>([]);
 
     const [formData, setFormData] = useState({
-        weight: selectedPackage?.weight ?? 0,
-        height: selectedPackage?.height ?? 0,
-        width: selectedPackage?.width ?? 0,
-        depth: selectedPackage?.depth ?? 0,
+        weight: selectedPackage?.weight ?? '',
+        height: selectedPackage?.height ?? '',
+        width: selectedPackage?.width ?? '',
+        depth: selectedPackage?.depth ?? '',
         source: selectedPackage?.source ?? '',
         address: selectedPackage?.address ?? '',
         state: selectedPackage?.state ?? '',
@@ -161,10 +161,10 @@ const UpdatePackageModal: React.FC<SessionModal & { selectedPackage?: PackageDat
                     </select>
                 </div>
                 <div className="flex flex-row gap-x-4">
-                    <input type="number" name="weight" value={formData.weight} onChange={handleInputChange} placeholder="Peso" className="h-8 w-1/4 indent-6 text-gray-800 rounded-sm border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"/>
-                    <input type="number" name="height" value={formData.height} onChange={handleInputChange} placeholder="Alto" className="h-8 w-1/4 indent-6 text-gray-800 rounded-sm border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"/>
-                    <input type="number" name="width" value={formData.width} onChange={handleInputChange} placeholder="Ancho" className="h-8 w-1/4 indent-6 text-gray-800 rounded-sm border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"/>
-                    <input type="number" name="depth" value={formData.depth} onChange={handleInputChange} placeholder="Largo" className="h-8 w-1/4 indent-6 text-gray-800 rounded-sm border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"/>
+                    <input type="number" name="weight" value={formData.weight} onChange={handleInputChange} placeholder="Peso(g)" className="h-8 w-1/4 indent-6 text-gray-800 rounded-sm border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"/>
+                    <input type="number" name="height" value={formData.height} onChange={handleInputChange} placeholder="Alto(cm)" className="h-8 w-1/4 indent-6 text-gray-800 rounded-sm border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"/>
+                    <input type="number" name="width" value={formData.width} onChange={handleInputChange} placeholder="Ancho(cm)" className="h-8 w-1/4 indent-6 text-gray-800 rounded-sm border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"/>
+                    <input type="number" name="depth" value={formData.depth} onChange={handleInputChange} placeholder="Largo(cm)" className="h-8 w-1/4 indent-6 text-gray-800 rounded-sm border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"/>
                 </div>
                 <div className="flex flex-row gap-x-4">
                     <input type="text" name="source" value={formData.source} onChange={handleInputChange} placeholder="Origen" className="h-10 w-1/3 indent-8 text-gray-800 rounded-sm border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"/>
