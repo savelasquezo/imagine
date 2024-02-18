@@ -4,18 +4,45 @@ import { SessionInfo } from "@/lib/types/types";
 import ReactPaginate from "react-paginate";
 import { PackageData } from "@/lib/types/types";
 
+import CreatePackageModal from "@/components/logistics/components/createPackageModal";
+import UpdatePackageModal from "@/components/logistics/components/updatePackageModal";
+import DeletePackageModal from "@/components/logistics/components/deletePackageModal";
+
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
 import { FaCirclePlus } from "react-icons/fa6";
 import { FaPencilAlt } from "react-icons/fa";
-import { AiFillDelete } from "react-icons/ai";
+import { AiFillDelete, AiOutlineClose } from "react-icons/ai";
 
 const Logistics: React.FC<SessionInfo> = ({ session }) => {
+
+  const [showModal, setShowModal] = useState(false);
+  const [closingModal, setClosingModal] = useState(false);
+
+  const [activeTab, setActiveTab] = useState('');
+  const [selectedObjectId, setSelectedObjectId] = useState<string | null>(null);
+
+  const openModal = (tab: string, id?: string) => {
+    setShowModal(true);
+    setActiveTab(tab);
+    if (id) {
+      setSelectedObjectId(id)
+    }
+  };
+
+  const closeModal = () => {
+      setClosingModal(true);
+      setTimeout(() => {
+      setShowModal(false);
+      setClosingModal(false);
+      }, 500);
+  };
+
   const [listPackage, setListPackage] = useState<PackageData[]>([]);
-  const [pageNumber, setPageNumber] = useState(0);
   const [filterCarrier, setFilterCarrier] = useState("");
   const [filterClient, setFilterClient] = useState("");
-  const pageElements = 7;
 
+  const [pageNumber, setPageNumber] = useState(0);
+  const pageElements = 7;
   const pageCount = Math.ceil(listPackage.length / pageElements);
   const changePage = ({ selected }: { selected: number }) => {
     setPageNumber(selected);
@@ -53,17 +80,15 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
   });
 
   return (
-    <div className="w-full h-full z-10">
+    <div className="w-full h-full ">
       {!session?.user ? (
         <div className="">
           <p>Aun no has iniciado session</p>
         </div>
       ) : (
-        <div
-          className={`fixed top-0 left-0 w-full h-full flex items-center justify-center transition ${!session?.user? "animate-fade-out animate__animated animate__fadeOut": "animate-fade-in animate__animated animate__fadeIn"}`}>
-          <div className="w-11/12 flex justify-between items-center h-5/6 mt-10">
+          <div className={`w-11/12 h-[calc(100vh-7rem)] mx-auto mt-5 flex justify-between items-center  ${!session?.user? "animate-fade-out animate__animated animate__fadeOut": "animate-fade-in animate__animated animate__fadeIn"}`}>
             <div className="relative w-full h-full bg-gray-200 rounded-md p-6">
-              <button className="absolute top-10 right-10 text-3xl text-green-600 hover:text-green-800 transition-colors duration-300"><FaCirclePlus /></button>
+              <button onClick={() => openModal('add')} className="absolute top-10 right-10 text-3xl text-green-600 hover:text-green-800 transition-colors duration-300"><FaCirclePlus /></button>
               <div className="w-full flex flex-row gap-x-4 items-center justify-start">
                 <input
                   type="text"
@@ -98,8 +123,8 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
                             <td className="whitespace-nowrap px-6 py-2 hidden sm:table-cell">{obj.carrier?.username ?? "N/A"}</td>
                             <td className="whitespace-nowrap px-6 py-2">{obj.client.username}</td>
                             <td className="whitespace-nowrap px-6 py-2 flex justify-center gap-x-2">
-                              <button className="text-base text-yellow-600 hover:text-yellow-800 transition-colors duration-300"><FaPencilAlt /></button>
-                              <button className="text-lg text-red-600 hover:text-red-800 transition-colors duration-300"><AiFillDelete /></button>
+                              <button onClick={() => openModal('put', obj.id)} className="text-base text-yellow-600 hover:text-yellow-800 transition-colors duration-300"><FaPencilAlt /></button>
+                              <button onClick={() => openModal('put', obj.id)} className="text-lg text-red-600 hover:text-red-800 transition-colors duration-300"><AiFillDelete /></button>
                             </td>
                           </tr>
                         ))}
@@ -121,13 +146,28 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
                   />
                 </div>
               ) : (
-                <div className="w-full h-full flex flex-col justify-center items-center">
-                  <p className="text-center text-gray-800 my-4 text-sm">
+                <div className="w-full h-full flex flex-col justify-center items-center -mt-10">
+                  <p className="text-center text-gray-800 text-sm">
                     ¡Aun No hay Historial disponible de Paquetes Enviados!
                   </p>
                 </div>
               )}
             </div>
+          </div>
+      )}
+      {showModal && (
+      <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center transition bg-opacity-50 bg-slate-300 backdrop-blur-sm z-40 ${closingModal ? "animate-fade-out animate__animated animate__fadeOut" : "animate-fade-in animate__animated animate__fadeIn"}`}>
+          <div className={`relative w-11/12 sm:w-3/5 md:w-3/5 lg:w-2/5 max-w-[40rem] bg-white rounded-lg p-6 lg:pb-2`}>
+              <button onClick={closeModal} className='absolute z-10 top-4 right-4 text-xl text-red-900 hover:text-gray-600 transition-colors duration-300' ><AiOutlineClose /></button>
+              <div className={`h-96 ${activeTab === 'add' ? 'block' : 'hidden'}`}>
+                <CreatePackageModal closeModal={closeModal} session={session}/>
+              </div>
+              <div className={`h-96 ${activeTab === 'put' ? 'block' : 'hidden'}`}>
+                <UpdatePackageModal closeModal={closeModal} session={session} selectedPackageId={selectedObjectId} />
+              </div>
+              <div className={`h-32 ${activeTab === 'del' ? 'block' : 'hidden'}`}>
+                <DeletePackageModal closeModal={closeModal} session={session} selectedPackageId={selectedObjectId} />
+              </div>
           </div>
         </div>
       )}
