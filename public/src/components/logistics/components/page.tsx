@@ -5,14 +5,16 @@ import ReactPaginate from "react-paginate";
 import { PackageData } from "@/lib/types/types";
 
 import { MdNavigateNext, MdNavigateBefore } from "react-icons/md";
-import { FaLink } from "react-icons/fa6";
+import { FaCirclePlus } from "react-icons/fa6";
+import { FaPencilAlt } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
 
 const Logistics: React.FC<SessionInfo> = ({ session }) => {
   const [listPackage, setListPackage] = useState<PackageData[]>([]);
   const [pageNumber, setPageNumber] = useState(0);
   const [filterCarrier, setFilterCarrier] = useState("");
   const [filterClient, setFilterClient] = useState("");
-  const pageElements = 5;
+  const pageElements = 7;
 
   const pageCount = Math.ceil(listPackage.length / pageElements);
   const changePage = ({ selected }: { selected: number }) => {
@@ -61,29 +63,32 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
           className={`fixed top-0 left-0 w-full h-full flex items-center justify-center transition ${!session?.user? "animate-fade-out animate__animated animate__fadeOut": "animate-fade-in animate__animated animate__fadeIn"}`}>
           <div className="w-11/12 flex justify-between items-center h-5/6 mt-10">
             <div className="relative w-full h-full bg-gray-200 rounded-md p-6">
-              <input
-                type="text"
-                placeholder="Filtrar por transportista"
-                value={filterCarrier}
-                onChange={(e) => setFilterCarrier(e.target.value)}
-                className="mb-4 px-4 py-2 border border-gray-400 rounded-md"
-              />
-              <input
-                type="text"
-                placeholder="Filtrar por cliente"
-                value={filterClient}
-                onChange={(e) => setFilterClient(e.target.value)}
-                className="mb-4 px-4 py-2 border border-gray-400 rounded-md"
-              />
+              <button className="absolute top-10 right-10 text-3xl text-green-600 hover:text-green-800 transition-colors duration-300"><FaCirclePlus /></button>
+              <div className="w-full flex flex-row gap-x-4 items-center justify-start">
+                <input
+                  type="text"
+                  placeholder="Filtrar por transportista"
+                  value={filterCarrier}
+                  onChange={(e) => setFilterCarrier(e.target.value)}
+                  className="mb-4 px-4 py-2 border border-gray-400 rounded-md"
+                />
+                <input
+                  type="text"
+                  placeholder="Filtrar por cliente"
+                  value={filterClient}
+                  onChange={(e) => setFilterClient(e.target.value)}
+                  className="mb-4 px-4 py-2 border border-gray-400 rounded-md"
+                />
+              </div>
               {filteredList.length > 0 ? (
-                <div className="relative h-full w-full text-gray-500">
+                <div className="h-full w-full text-gray-500">
                   <table className="min-w-full text-center text-sm font-light">
                     <thead className="font-medium text-gray-800">
                       <tr className="border-b border-slate-900 uppercase text-xs">
                         <th scope="col" className=" px-6 py-2">Codigo</th>
                         <th scope="col" className=" px-6 py-2">Transportista</th>
                         <th scope="col" className=" px-6 py-2">Cliente</th>
-                        <th scope="col" className=" px-6 py-2">Estado</th>
+                        <th scope="col" className=" px-6 py-2"></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -92,7 +97,10 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
                             <td className="whitespace-nowrap px-6 py-2 font-Courier font-semibold">{obj.code}</td>
                             <td className="whitespace-nowrap px-6 py-2 hidden sm:table-cell">{obj.carrier?.username ?? "N/A"}</td>
                             <td className="whitespace-nowrap px-6 py-2">{obj.client.username}</td>
-                            <td className="whitespace-nowrap px-6 py-2 flex justify-center"><FaLink /> </td>
+                            <td className="whitespace-nowrap px-6 py-2 flex justify-center gap-x-2">
+                              <button className="text-base text-yellow-600 hover:text-yellow-800 transition-colors duration-300"><FaPencilAlt /></button>
+                              <button className="text-lg text-red-600 hover:text-red-800 transition-colors duration-300"><AiFillDelete /></button>
+                            </td>
                           </tr>
                         ))}
                     </tbody>
@@ -105,7 +113,7 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
                     marginPagesDisplayed={0}
                     pageRangeDisplayed={5}
                     onPageChange={changePage}
-                    className={"absolute bottom-0 w-full flex flex-row items-center justify-center gap-x-2"}
+                    className={"absolute bottom-5 left-0 w-full flex flex-row items-center justify-center gap-x-2"}
                     pageClassName={"bg-gray-500 text-white rounded-full !px-3 !py-0 transition-colors duration-300"}
                     activeClassName={"bg-gray-500 text-white rounded-full !px-3 !py-0 transition-colors duration-300"}
                     previousClassName={"absolute left-5 bg-gray-500 rounded-full p-1 transition-colors duration-300"}
