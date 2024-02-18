@@ -6,3 +6,5 @@ class LogisticsConfig(AppConfig):
     name = 'apps.logistics'
     verbose_name = 'Logistica'
 
+    def ready(self):
+        from . import signals
