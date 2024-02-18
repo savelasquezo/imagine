@@ -32,4 +32,4 @@ def signalListPackage(sender, instance, **kwargs):
     except Exception as e:
         eDate = timezone.now().strftime("%Y-%m-%d %H:%M")
         with open(os.path.join(settings.BASE_DIR, 'logs/core.log'), 'a') as f:
-            f.write("signalTicketsLottery {} --> Error: {}\n".format(eDate, str(e)))
+            f.write("signalListPackage {} --> Error: {}\n".format(eDate, str(e)))

@@ -39,7 +39,7 @@ const LoginModal: React.FC<ModalFunction> = ({ closeModal }) => {
           setLoading(false);
           closeModal()
         } else {
-          setError("username/Contraseña Invalidos! ");
+          setError("Usuario/Contraseña Invalidos! ");
           setLoading(false);
         }
     };
@@ -49,7 +49,7 @@ const LoginModal: React.FC<ModalFunction> = ({ closeModal }) => {
             <form onSubmit={onSubmit} method="POST" className="flex flex-col gap-y-4 p-2">
                 <div className="relative h-12 w-full min-w-[200px]">
                     <div className="absolute text-gray-500 text-lg top-2/4 left-4 grid h-5 w-5 -translate-y-2/4 items-center"><FaUser/></div>
-                    <input className="h-full w-full indent-8 text-gray-200 rounded-lg border border-gray-700 focus:border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 ring-0 focus:!ring-0 focus:outline-0 disabled:border-0"
+                    <input className="h-full w-full indent-8 text-gray-800 rounded-lg border border-gray-700 focus:border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 ring-0 focus:!ring-0 focus:outline-0 disabled:border-0"
                         type="text"
                         name="username"
                         value={username}
@@ -60,7 +60,7 @@ const LoginModal: React.FC<ModalFunction> = ({ closeModal }) => {
                 </div>
                 <div className="relative h-12 w-full min-w-[200px]">
                     <div className="absolute text-gray-500 text-lg top-2/4 left-4 grid h-5 w-5 -translate-y-2/4 items-center"><FiLock/></div>
-                    <input className="h-full w-full indent-8 text-gray-200 rounded-lg border border-gray-700 focus:border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline-0 ring-0 focus:!ring-0 focus:outline-0 disabled:border-0"
+                    <input className="h-full w-full indent-8 text-gray-800 rounded-lg border border-gray-700 focus:border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline-0 ring-0 focus:!ring-0 focus:outline-0 disabled:border-0"
                         type="password"
                         name="password"
                         value={password}
@@ -77,8 +77,8 @@ const LoginModal: React.FC<ModalFunction> = ({ closeModal }) => {
                     <button type="submit" className="h-10 bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full text-center">Ingresar</button>
                 )}
             </form>
-            { error && (<div className="text-red-400 text-sm mt-2">{error}</div>)}
-            { !error && (<div className="text-gray-800 text-xs mt-2 h-6">¿Necesitas Ayuda? support@imagine.com</div>)}
+            { error && (<div className="text-red-400 text-xs mt-2">{error}</div>)}
+            { !error && (<div className="text-gray-800 text-xs mt-2 h-6">¿Necesitas Ayuda? savelasquezo@gmail.com</div>)}
         </div>
     );
 };

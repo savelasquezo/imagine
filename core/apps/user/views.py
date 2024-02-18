@@ -13,12 +13,22 @@ from apps.user.serializers import CarrierSerializer, ClientSerializer
 
 class fetchAllCarrier(generics.ListAPIView):
     serializer_class = CarrierSerializer
-    permission_classes = [AllowAny] #IsAuthenticated
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
+        """
+        Retrieve all Carriers.
+        Returns:
+        - QuerySet: All Carriers.
+        """
         data = Carrier.objects.all().order_by('-id')
         return data
 
     def get(self, request, *args, **kwargs):
+        """
+        Handle GET request to fetch all carriers.
+        Returns:
+        - Response: JSON response containing the serialized data.
+        """
         try:
             queryset = self.get_queryset()
             serialized_data = self.serializer_class(queryset, many=True).data
@@ -33,12 +43,22 @@ class fetchAllCarrier(generics.ListAPIView):
 
 class fetchAllClient(generics.ListAPIView):
     serializer_class = ClientSerializer
-    permission_classes = [AllowAny] #IsAuthenticated
+    permission_classes = [IsAuthenticated]
     def get_queryset(self):
+        """
+        Retrieve all clients.
+        Returns:
+        - QuerySet: All clients.
+        """
         data = Client.objects.all().order_by('-id')
         return data
 
     def get(self, request, *args, **kwargs):
+        """
+        Handle GET request to fetch all clients.
+        Returns:
+        - Response: JSON response containing the serialized data.
+        """
         try:
             queryset = self.get_queryset()
             serialized_data = self.serializer_class(queryset, many=True).data

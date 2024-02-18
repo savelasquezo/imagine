@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { useSearchParams } from 'next/navigation';
 import { NextResponse } from 'next/server';
-import { validatePassword } from "../../../utils/passwordValidation";
+import { validatePassword } from "@/utils/passwordValidation";
 
 import CircleLoader from 'react-spinners/CircleLoader';
 
@@ -13,7 +12,6 @@ import {FiLock} from 'react-icons/fi'
 import { ModalFunction } from '@/lib/types/types'
   
 const RegisterModal: React.FC<ModalFunction> = ({ closeModal }) => {
-    const searchParams = useSearchParams();
   
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -65,7 +63,6 @@ const RegisterModal: React.FC<ModalFunction> = ({ closeModal }) => {
           setError('');
         }
 
-        const referred = searchParams.get('uuid') ?? 'N/A';
         try {
           const res = await fetch(`${process.env.NEXT_PUBLIC_APP_API_URL}/app/auth/users/`, {
             method: 'POST',
@@ -75,7 +72,6 @@ const RegisterModal: React.FC<ModalFunction> = ({ closeModal }) => {
             body: JSON.stringify({
               username,
               email,
-              referred,
               password,
               re_password
             }),
@@ -91,7 +87,7 @@ const RegisterModal: React.FC<ModalFunction> = ({ closeModal }) => {
           setRegistrationSuccess(true);
 
         } catch (error) {
-          return NextResponse.json({ error: 'There was an error with the network request' });
+          return NextResponse.json({ error: 'There was an error wtext-gray-200ith the network request' });
 
         } finally  {
           setLoading(false);
@@ -104,7 +100,7 @@ const RegisterModal: React.FC<ModalFunction> = ({ closeModal }) => {
             <form onSubmit={onSubmit} className="flex flex-col gap-y-4 p-2">
                 <div className="relative h-8 md:h-10 w-full flex items-center min-w-[200px]">
                     <div className="absolute text-gray-500 text-lg top-2/4 left-4 grid h-5 w-5 -translate-y-2/4 items-center"><AiOutlineUser/></div>
-                    <input className="h-8 md:h-12 w-full indent-8 text-gray-200 rounded-lg border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"
+                    <input className="h-8 md:h-12 w-full indent-8 text-gray-800 rounded-lg border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"
                         type="text"
                         name="username"
                         value={username}
@@ -116,7 +112,7 @@ const RegisterModal: React.FC<ModalFunction> = ({ closeModal }) => {
                 </div>
                 <div className="relative h-8 md:h-10 w-full flex items-center min-w-[200px]">
                     <div className="absolute text-gray-400 text-lg top-2/4 left-4 grid h-5 w-5 -translate-y-2/4 items-center"><CiMail/></div>
-                    <input className="h-8 md:h-12 w-full indent-8 text-gray-200 rounded-lg border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"
+                    <input className="h-8 md:h-12 w-full indent-8 text-gray-800 rounded-lg border border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline outline-0 transition-all focus:outline-0 disabled:border-0"
                         type="text"
                         name="email"
                         value={email}
@@ -129,7 +125,7 @@ const RegisterModal: React.FC<ModalFunction> = ({ closeModal }) => {
                 </div>
                  <div className="relative h-8 md:h-10 w-full flex items-center min-w-[200px]">
                     <div className="absolute text-gray-500 text-lg top-2/4 left-4 grid h-5 w-5 -translate-y-2/4 items-center"><FiLock/></div>
-                    <input className="h-8 md:h-12 w-full indent-8 text-gray-200 rounded-lg border border-gray-700 focus:border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline-0 ring-0 focus:!ring-0 transition-all focus:outline-0 disabled:border-0"
+                    <input className="h-8 md:h-12 w-full indent-8 text-gray-800 rounded-lg border border-gray-700 focus:border-gray-700 bg-transparent px-3 py-2 !pr-9 text-sm outline-0 ring-0 focus:!ring-0 transition-all focus:outline-0 disabled:border-0"
                         type="password" 
                         name="password"
                         value={password}
@@ -155,9 +151,9 @@ const RegisterModal: React.FC<ModalFunction> = ({ closeModal }) => {
                   )
                 )}
             </form>
-            { success && (<div className="text-lime-400 text-sm mt-0 md:mt-2">{success}</div>)}
-            { error && (<div className="text-red-400 text-sm mt-0 md:mt-2">{error}</div>)}
-            { !error && !success && (<div className="text-gray-800 text-xs mt-0 md:mt-2 h-6">¿Necesitas Ayuda? support@imagine.com</div>)}
+            { success && (<div className="text-lime-700 text-xs mt-0 md:mt-2">{success}</div>)}
+            { error && (<div className="text-red-400 text-xs mt-0 md:mt-2">{error}</div>)}
+            { !error && !success && (<div className="text-gray-800 text-xs mt-0 md:mt-2 h-6">¿Necesitas Ayuda? savelasquezo@gmail.com</div>)}
         </div>
     );
 };

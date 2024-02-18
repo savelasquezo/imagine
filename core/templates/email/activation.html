@@ -1,0 +1,22 @@
+{% block subject %}
+Account activation on {{ site_name }}
+{% endblock subject %}
+
+{% block text_body %}
+You're receiving this email because you need to finish the activation process on {{ site_name }}.
+Please go to the following page to activate your account:
+
+http://localhost:3000/{{ url|safe }}
+
+"Thanks for using our site!"
+{% endblock text_body %}
+
+
+{% block html_body %}
+<p>You're receiving this email because you need to finish the activation process on {{ site_name }}.</p>
+<p>Please go to the following page to activate your account:</p>
+
+<p><a href="http://localhost:3000/{{ url|safe }}">http://localhost:3000/{{ url|safe }}</a></p>
+
+<p>"Thanks for using our site!"</p>
+{% endblock html_body %}

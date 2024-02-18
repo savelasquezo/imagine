@@ -26,7 +26,7 @@ $ sudo service redis-server start
 
 """Entorno Virtual Configuracion"""
 
-$ cd brm/core
+$ cd imagine/core
 
 $ sudo apt-get install virtualenv -y
 
@@ -44,14 +44,12 @@ $ python3 manage.py createsuperuser
 
 *Ingresamos los Datos- Tomar Nota del "email" & "contraseña" Usados*
 
-$ python3 manage.py collectstatic --link --noinput
-
 $ python3 manage.py runserver
 
 *Mantener esta Ventana Activa*
 
 
-*Abrir Nueva Terminal el el Directorio "brm" *
+*Abrir Nueva Terminal el el Directorio "imagine" *
 
 """Frontend"""
 
@@ -73,7 +71,7 @@ $ nvm install --lts
 
 $ npm install
 
-$ npm run build
+$ npm run dev
 
 *Mantener esta Ventana Activa*
 

@@ -62,10 +62,10 @@ const AuthModal: React.FC<ModalFunction> = ({ closeModal }) => {
     return (
         <div className="w-full h-full">
             <div className="relative w-full h-full flex flex-col items-center justify-start">
-                <Image unoptimized width={405} height={200} src={"/assets/image/logo1.webp"} className="object-fit self-start scale-75" alt="" />
+                <Image unoptimized width={405} height={200} src={"/images/logo0.webp"} className="object-fit self-start scale-75" alt="" />
                 <div className="px-4">
-                    <p className="text-sm text-white">¡Bienvenido a Imagine!</p><br />
-                    <p className="text-xs text-white font-thin text-justify">¡Nos emociona darte la bienvenida a nuestra equipo de trabajo! Activa tu cuenta dando click en el siguiente enlace</p>
+                    <p className="text-sm text-gray-800">¡Bienvenido a Imagine!</p><br />
+                    <p className="text-xs text-gray-800 text-justify">¡Nos emociona darte la bienvenida a nuestra equipo de trabajo! Activa tu cuenta dando click en el siguiente enlace</p>
                 </div>
                 <div className="absolute bottom-10 w-full px-4 ">
                     {activated ? (

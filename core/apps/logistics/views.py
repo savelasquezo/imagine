@@ -1,4 +1,4 @@
-import os, uuid
+import os
 from django.conf import settings
 from django.utils import timezone
 
@@ -13,30 +13,25 @@ from apps.logistics.serializers import PackageSerializer
 from apps.user.models import Client, Carrier
 
 
-class LambdaChallenge(generics.ListAPIView):
-    permission_classes = [AllowAny] #IsAuthenticated
-    def get(self, request, *args, **kwargs):
-        try:
-            calcVolumen = lambda package: package.height * package.width * package.depth
-            data = Package.objects.all()
-            listVolumen = list(map(calcVolumen, data))
-            return Response({'LambdaVols': listVolumen}, status=status.HTTP_200_OK)
-        except Exception as e:
-            eDate = timezone.now().strftime("%Y-%m-%d %H:%M")
-            with open(os.path.join(settings.BASE_DIR, 'logs/core.log'), 'a') as f:
-                f.write("LambdaChallenge {} --> Error: {}\n".format(eDate, str(e)))
-            return Response({'error': 'NotFound Packages'}, status=status.HTTP_404_NOT_FOUND)
-
-
 class fetchPackageByClient(generics.ListAPIView):
     serializer_class = PackageSerializer
-    permission_classes = [AllowAny] #IsAuthenticated
+    permission_classes = [IsAuthenticated]
     def get_queryset(self, id):
+        """
+        Retrieve packages associated with the specified client.
+        Returns:
+        - QuerySet: Packages associated with the client.
+        """
         client = Client.objects.get(id=id)
         data = Package.objects.filter(client=client).order_by('-id')
         return data
 
     def get(self, request, *args, **kwargs):
+        """
+        Handle GET request to fetch packages by client.
+        Returns:
+        - Response: JSON response containing the serialized data.
+        """
         try:
             id = request.data.get('id', '')
             queryset = self.get_queryset(id)
@@ -52,13 +47,23 @@ class fetchPackageByClient(generics.ListAPIView):
 
 class fetchPackageByCarrier(generics.ListAPIView):
     serializer_class = PackageSerializer
-    permission_classes = [AllowAny] #IsAuthenticated
+    permission_classes = [IsAuthenticated]
     def get_queryset(self, id):
+        """
+        Retrieve packages associated with the specified carrier.
+        Returns:
+        - QuerySet: Packages associated with the carrier.
+        """
         carrier = Carrier.objects.get(id=id)
         data = Package.objects.filter(carrier=carrier).order_by('-id')
         return data
 
     def get(self, request, *args, **kwargs):
+        """
+        Handle GET request to fetch packages by carrier.
+        Returns:
+        - Response: JSON response containing the serialized data.
+        """
         try:
             id = request.data.get('id', '')
             queryset = self.get_queryset(id)
@@ -74,9 +79,14 @@ class fetchPackageByCarrier(generics.ListAPIView):
 
 class requestPackage(generics.GenericAPIView):
     serializer_class = PackageSerializer
-    permission_classes = [AllowAny] #IsAuthenticated
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, *args, **kwargs):
+        """
+        Create a new package.
+        Returns:
+        - Response: JSON response indicating success or failure of the operation.
+        """
         try:
             data = request.data.copy()
             data['carrier'] = Carrier.objects.get(id=data['carrier']) if data['carrier'] else None
@@ -91,6 +101,11 @@ class requestPackage(generics.GenericAPIView):
             return Response({'error': 'NotFound Package.'}, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request, *args, **kwargs):
+        """
+        Update an existing package.
+        Returns:
+        - Response: JSON response indicating success or failure of the operation.
+        """
         try:
             data = request.data.copy()
             data['client'] = Client.objects.get(id=data['client'])
@@ -110,6 +125,11 @@ class requestPackage(generics.GenericAPIView):
 
 
     def delete(self, request, *args, **kwargs):
+        """
+        Delete an existing package.
+        Returns:
+        - Response: JSON response indicating success or failure of the operation.
+        """
         try:
             data = request.data.copy()
             package = Package.objects.get(id=data['id'])
@@ -126,9 +146,14 @@ class requestPackage(generics.GenericAPIView):
 
 class assignPackageToCarrier(generics.ListAPIView):
     serializer_class = PackageSerializer
-    permission_classes = [AllowAny] #IsAuthenticated
+    permission_classes = [IsAuthenticated]
 
     def put(self, request, *args, **kwargs):
+        """
+        Assign a package to a carrier.
+        Returns:
+        - Response: JSON response indicating success or failure of the operation.
+        """
         try:
             data = request.data.copy()
             data['client'] = Client.objects.get(id=data['client'])

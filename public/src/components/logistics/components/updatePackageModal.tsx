@@ -181,11 +181,11 @@ const UpdatePackageModal: React.FC<SessionModal & { selectedPackage?: PackageDat
                     </select>
                 </div>
                 {loading ? (
-                    <button type="button" className="h-10 mt-4 mb-2 bg-green-900 text-white font-semibold rounded-sm py-2 px-4 w-full text-center flex items-center justify-center">
+                    <button type="button" className="h-10 mt-4 mb-2 bg-blue-900 text-white font-semibold rounded-sm py-2 px-4 w-full text-center flex items-center justify-center">
                         <CircleLoader loading={loading} size={25} color="#1c1d1f" />
                     </button>
                 ) : (
-                    <button type="submit" className="h-10 mt-4 mb-2 bg-green-700 hover:bg-green-800 text-white font-semibold rounded-sm py-2 px-4 w-full text-center">
+                    <button type="submit" className="h-10 mt-4 mb-2 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-sm py-2 px-4 w-full text-center">
                         <p className="uppercase text-sm">Actualizar</p>           
                     </button>
                 )}

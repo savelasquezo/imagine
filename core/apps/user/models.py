@@ -8,20 +8,19 @@ from django.utils.translation import gettext_lazy as _
 types = (('truck','Camion'),('car','Carro'),('motobyke','Moto'))
 
 class AccountManager(BaseUserManager):
-    def create_user(self, email, password=None, **extra_fields):
-        if not email:
-            raise ValueError('¡Email Obligatorio!')
-        email = self.normalize_email(email)
-        user = self.model(email=email, **extra_fields)
+    def create_user(self, email, username, password=None, **extra_fields):
+        if not username:
+            raise ValueError('¡Username Obligatorio!')
+        user = self.model(username=username, email=self.normalize_email(email), **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, password=None, **extra_fields):
+    def create_superuser(self, email, username, password=None, **extra_fields):
         extra_fields.setdefault('is_staff', True)
         extra_fields.setdefault('is_superuser', True)
 
-        return self.create_user(email, password, **extra_fields)
+        return self.create_user(email, username, password, **extra_fields)
 
 class Account(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(_("ID"),default=uuid.uuid4, unique=True, primary_key=True)

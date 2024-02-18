@@ -83,16 +83,37 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
     <div className="w-full h-full ">
       {!session?.user ? (
         <div className="w-full h-full flex flex-col justify-start items-center mt-8 px-16">
-          <p className="font-bold text-3xl text-slate-700">IMAGINE</p><br />
+          <div className="w-full flex flex-row items-center justify-start my-4">
+            <p className="font-bold text-3xl text-slate-700">IMAGINE APPS</p>
+            <p className="ml-4">{"-->"} SR Fullstack - Simon Velasquez </p>
+          </div>
           <p className="text-sm">
-            La aplicacion esta desarrollada con el fin de validar los conocimientos tecnicos, para la vacante de Senior Fullstack con Python
-            se opto por hacer una API-RestFull con WebShockets para la visualizacion de la Informacio, para mayor comodidad la interfaz completa
-            esta integrada en una unica vista, Asi como el CRUD referente a la aplicacion "logistics" solicitada. <br /><br />
-            La logica del proyecto se realizo con Django REST en Modo ASGI, Gestionado por Djoser con JWT para la gestion de Usuarios, comunicado con
-            una interfaz desarrolada en Javascrypt haciendo uso de React con NextJs. El repositorio del proyecto se encuentra en GitHub el cual contiene
-            El archivo README.md donde se especifica el paso a paso para la instalacion del proyecto, en caso de un inconveniente no previsto favor comunicarmelo. <br /><br />
+            La aplicación está desarrollada con el fin de validar los conocimientos técnicos, para la vacante de 
+            Senior Fullstack con Python se optó por hacer una API-RestFull con WebShockets para la visualización 
+            de la Información, para mayor comodidad la interfaz completa está integrada en una única vista, 
+            Así como el CRUD referente a la aplicación "logistics" solicitada. <br /><br />
+            La lógica del proyecto se realizó con Django REST en Modo ASGI, gestionado por Djoser con JWT 
+            para la gestión de usuarios, se uso Redis para el almacenamiento en Cache, El proyecto cuenta con una interfaz desarrollada en JavaScript haciendo 
+            uso de React con Nextjs. El repositorio del proyecto se encuentra en GitHub el cual contiene 
+            el archivo README.md donde se especifica el paso a paso para la instalación del proyecto. 
+            En caso de un inconveniente no previsto, favor comunicármelo. <br /><br />
             GitHub-<a href="https://github.com/savelasquezo/imagine" className="text-blue-800 font-semibold">https://github.com/savelasquezo/imagine</a><br />
-           <span className="text-xs">El repositorio ya incluye las variables de entorno .env para mayor facilidad en la revision del proyecto</span>
+           <span className="text-xs">
+              El repositorio ya incluye las variables de entorno .env para mayor facilidad en la revisión del proyecto, 
+              se aclara que esto solo se hace por tratarse de una prueba técnica.
+            </span><br /><br />
+            Admin-<a href="http://localhost:8000/app/admin/" className="text-blue-800 font-semibold">http://localhost:8000/app/admin/</a><br />
+            <span className="text-xs">
+            La gestión de usuarios se puede realizar desde el panel administrativo de Django, allí podrán agregar clientes y transportistas de prueba para evaluar la aplicación.
+            </span><br /><br />
+            Challenges-<a href="http://localhost:3000/extra" className="text-blue-800 font-semibold">http://localhost:3000/extra</a><br />
+            <span className="text-xs">
+            Los desafios planteado al final del documento los pueden encontrar desarrollados en la "extras" una vez se tenga instalado y ejecutando el servicio de NextJs
+            </span><br /><br /><br />
+              Espero que se hayan especificado con suficiente claridad los parámetros del proyecto. 
+              Debido al limitado tiempo el cual pude dedicarle al proyecto, he pasado algunas cosas 
+              por alto y hay muchas cosas que pueden mejorar; sin embargo, se cumplió a 
+              cabalidad con los objetivos del proyecto.
           </p>
         </div>
       ) : (
@@ -102,14 +123,14 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
               <div className="w-full flex flex-row gap-x-4 items-center justify-start">
                 <input
                   type="text"
-                  placeholder="Filtrar por transportista"
+                  placeholder="Filtrar Transportistas"
                   value={filterCarrier}
                   onChange={(e) => setFilterCarrier(e.target.value)}
                   className="mb-4 px-4 py-2 border border-gray-400 rounded-md"
                 />
                 <input
                   type="text"
-                  placeholder="Filtrar por cliente"
+                  placeholder="Filtrar Clientes"
                   value={filterClient}
                   onChange={(e) => setFilterClient(e.target.value)}
                   className="mb-4 px-4 py-2 border border-gray-400 rounded-md"

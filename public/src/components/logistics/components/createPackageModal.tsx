@@ -55,7 +55,7 @@ const CreatePackageModal: React.FC<SessionModal> = ({ closeModal, session  }) =>
     const [listClient, setListClient] = useState<ClientData[]>([]);
 
     const [formData, setFormData] = useState({
-        weight: 0, height: 0, width: 0,depth: 0,
+        weight: '', height: '', width: '',depth: '',
         source: '', address: '',state: '',
         carrier: '', client: '',
     });
@@ -175,7 +175,7 @@ const CreatePackageModal: React.FC<SessionModal> = ({ closeModal, session  }) =>
                     </button>
                 ) : (
                     <button type="submit" className="h-10 mt-4 mb-2 bg-green-700 hover:bg-green-800 text-white font-semibold rounded-sm py-2 px-4 w-full text-center">
-                        <p className="uppercase text-sm">Actualizar</p>           
+                        <p className="uppercase text-sm">Agregar</p>           
                     </button>
                 )}
             </form>

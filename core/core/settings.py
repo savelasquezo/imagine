@@ -241,7 +241,7 @@ SIMPLE_JWT = {
 
 # Djoser
 DJOSER = {
-    "LOGIN_FIELD": "email",
+    "LOGIN_FIELD": "username",
     "USER_CREATE_PASSWORD_RETYPE": True,
     "USERNAME_CHANGED_EMAIL_CONFIRMATION": True,
     "PASSWORD_CHANGED_EMAIL_CONFIRMATION": True,
@@ -252,7 +252,7 @@ DJOSER = {
     "SET_PASSWORD_RETYPE": True,
     "PASSWORD_RESET_CONFIRM_RETYPE": True,
     "USERNAME_RESET_CONFIRM_URL": "email/reset/confirm/{uid}/{token}",
-    "ACTIVATION_URL": "activate?uid={uid}&token={token}",
+    "ACTIVATION_URL": "?auth=True&uid={uid}&token={token}",
     "SERIALIZERS": {
         "user_create": "apps.user.serializers.UserSerializer",
         "user": "apps.user.serializers.UserSerializer",
@@ -265,8 +265,5 @@ DJOSER = {
         "confirmation": "email/confirmation.html",
         "password_reset": "email/password_reset.html",
         "password_changed_confirmation": "email/password_changed_confirmation.html",
-        "username_changed_confirmation": "email/username_changed_confirmation.html",
-        "username_reset": "email/username_reset.html",
     },
 }
-
