@@ -78,7 +78,7 @@ const Auth: React.FC<SessionInfo> = ({ session  }) => {
             )}
             {showModal && (
             <div className={`fixed top-0 left-0 w-full h-full flex items-center justify-center transition bg-opacity-50 bg-gray-900 backdrop-blur-sm z-40 ${closingModal ? "animate-fade-out animate__animated animate__fadeOut" : "animate-fade-in animate__animated animate__fadeIn"}`}>
-                <div className="w-1/4 h-3/5 flex justify-between items-center rounded-2xl bg-white shadow-lg">
+                <div className="w-11/12 sm:w-3/4 lg:w-1/3 h-2/5 lg:h-3/5  flex justify-between items-center rounded-2xl bg-white shadow-lg">
                   <div className="relative w-full h-full p-6">
                     <button onClick={closeModal} className='absolute top-4 right-4 text-xl text-gray-400 hover:text-gray-600 transition-colors duration-300' ><AiOutlineClose /></button>
                     <div className={`flex flex-row w-full items-center ${activeTab === 'auth' ?  'hidden' : ''}`}>
