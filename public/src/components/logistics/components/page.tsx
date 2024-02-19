@@ -84,30 +84,30 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
       {!session?.user ? (
         <div className="w-full h-full flex flex-col justify-start items-center mt-8 px-16">
           <div className="w-full flex flex-row items-center justify-start my-4">
-            <p className="font-bold text-3xl text-slate-700">IMAGINE APPS</p>
-            <p className="ml-4">{"-->"} SR Fullstack - Simon Velasquez </p>
+            <p className="font-bold text-lg md:text-3xl text-slate-700">IMAGINE APPS</p>
+            <p className="ml-4 text-xs md:text-base">{"-->"} Simon Velasquez </p>
           </div>
-          <p className="text-sm">
+          <p className="text-[0.55rem] md:text-sm text-justify">
             La aplicación está desarrollada con el fin de validar los conocimientos técnicos, para la vacante de 
             Senior Fullstack con Python se optó por hacer una API-RestFull con WebShockets para la visualización 
             de la Información, para mayor comodidad la interfaz completa está integrada en una única vista, 
             Así como el CRUD referente a la aplicación "logistics" solicitada. <br /><br />
-            La lógica del proyecto se realizó con Django REST en Modo ASGI, gestionado por Djoser con JWT 
+            <span className="text-[0.55rem] md:text-sm">La lógica del proyecto se realizó con Django REST en Modo ASGI, gestionado por Djoser con JWT 
             para la gestión de usuarios, se uso Redis para el almacenamiento en Cache, El proyecto cuenta con una interfaz desarrollada en JavaScript haciendo 
             uso de React con Nextjs. El repositorio del proyecto se encuentra en GitHub el cual contiene 
             el archivo README.md donde se especifica el paso a paso para la instalación del proyecto. 
-            En caso de un inconveniente no previsto, favor comunicármelo. <br /><br />
+            En caso de un inconveniente no previsto, favor comunicármelo.</span><br /><br />
             GitHub-<a href="https://github.com/savelasquezo/imagine" className="text-blue-800 font-semibold">https://github.com/savelasquezo/imagine</a><br />
-           <span className="text-xs">
+           <span className="text-[0.55rem] md:text-xs">
               El repositorio ya incluye las variables de entorno .env para mayor facilidad en la revisión del proyecto, 
               se aclara que esto solo se hace por tratarse de una prueba técnica.
             </span><br /><br />
             Admin-<a href="http://localhost:8000/app/admin/" className="text-blue-800 font-semibold">http://localhost:8000/app/admin/</a><br />
-            <span className="text-xs">
+            <span className="text-[0.55rem] md:text-xs">
             La gestión de usuarios se puede realizar desde el panel administrativo de Django, allí podrán agregar clientes y transportistas de prueba para evaluar la aplicación.
             </span><br /><br />
             Challenges-<a href="http://localhost:3000/extra" className="text-blue-800 font-semibold">http://localhost:3000/extra</a><br />
-            <span className="text-xs">
+            <span className="text-[0.55rem] md:text-xs">
             Los desafios planteado al final del documento los pueden encontrar desarrollados en la "extras" una vez se tenga instalado y ejecutando el servicio de NextJs
             </span><br /><br /><br />
               Espero que se hayan especificado con suficiente claridad los parámetros del proyecto. 
@@ -119,49 +119,53 @@ const Logistics: React.FC<SessionInfo> = ({ session }) => {
       ) : (
           <div className={`w-11/12 h-[calc(100vh-7rem)] mx-auto mt-5 flex justify-between items-center  ${!session?.user? "animate-fade-out animate__animated animate__fadeOut": "animate-fade-in animate__animated animate__fadeIn"}`}>
             <div className="relative w-full h-full bg-gray-200 rounded-md p-6">
-              <button onClick={() => openModal('add')} className="absolute top-10 right-10 text-3xl text-green-600 hover:text-green-800 transition-colors duration-300"><FaCirclePlus /></button>
-              <div className="w-full flex flex-row gap-x-4 items-center justify-start">
+              <button onClick={() => openModal('add')} className="absolute top-8 md:top-10 right-6 md:right-10 text-3xl text-green-600 hover:text-green-800 transition-colors duration-300"><FaCirclePlus /></button>
+              <div className="w-full flex flex-row gap-x-4 items-start md:items-center justify-start">
                 <input
                   type="text"
-                  placeholder="Filtrar Transportistas"
+                  placeholder="Transportistas"
                   value={filterCarrier}
                   onChange={(e) => setFilterCarrier(e.target.value)}
-                  className="mb-4 px-4 py-2 border border-gray-400 rounded-md"
+                  className="mb-4 px-4 w-32 sm:w-40 md:w-48 py-2 border border-gray-400 rounded-md"
                 />
                 <input
                   type="text"
-                  placeholder="Filtrar Clientes"
+                  placeholder="Clientes"
                   value={filterClient}
                   onChange={(e) => setFilterClient(e.target.value)}
-                  className="mb-4 px-4 py-2 border border-gray-400 rounded-md"
+                  className="mb-4 px-4 w-32 sm:w-40 md:w-48 py-2 border border-gray-400 rounded-md"
                 />
               </div>
               {filteredList.length > 0 ? (
                 <div className="h-full w-full text-gray-500">
                   <table className="min-w-full text-center text-sm font-light">
                     <thead className="font-medium text-gray-800">
-                      <tr className="border-b border-slate-900 uppercase text-xs">
-                        <th scope="col" className=" px-6 py-2">Codigo</th>
-                        <th scope="col" className=" px-6 py-2">Transportista</th>
-                        <th scope="col" className=" px-6 py-2">Cliente</th>
-                        <th scope="col" className=" px-6 py-2">Peso</th>
-                        <th scope="col" className=" px-6 py-2">Alto</th>
-                        <th scope="col" className=" px-6 py-2">Ancho</th>
-                        <th scope="col" className=" px-6 py-2">Largo</th>
-                        <th scope="col" className=" px-6 py-2"></th>
+                      <tr className="border-b border-slate-900 uppercase text-xs text-[0.55rem] sm:text-[0.65rem] md:text-xs lg:text-sm">
+                        <th scope="col" className="px-0 md:px-2 py-2">Codigo</th>
+                        <th scope="col" className="px-0 md:px-2 py-2">Transportista</th>
+                        <th scope="col" className="px-0 md:px-2 py-2">Cliente</th>
+                        <th scope="col" className="px-0 md:px-2 py-2">Peso</th>
+                        <th scope="col" className="px-0 md:px-2 py-2">Alto</th>
+                        <th scope="col" className="px-0 md:px-2 py-2">Ancho</th>
+                        <th scope="col" className="px-0 md:px-2 py-2">Largo</th>
+                        <th scope="col" className="px-0 md:px-2 py-2 hidden lg:table-cell">Ingreso</th>
+                        <th scope="col" className="px-0 md:px-2 py-2 hidden lg:table-cell">Entrega</th>
+                        <th scope="col" className="px-0 md:px-2 py-2"></th>
                       </tr>
                     </thead>
                     <tbody>
                       {filteredList?.slice(pageNumber * pageElements,(pageNumber + 1) * pageElements).map((obj, index) => (
-                          <tr key={index} className="border-b border-slate-700 text-xs text-gray-800">
-                            <td className="whitespace-nowrap px-6 py-2 font-Courier font-semibold">{obj.code}</td>
-                            <td className="whitespace-nowrap px-6 py-2 hidden sm:table-cell">{obj.carrier?.username ?? "N/A"}</td>
-                            <td className="whitespace-nowrap px-6 py-2">{obj.client.username}</td>
-                            <td className="whitespace-nowrap px-6 py-2">{obj.weight}g</td>
-                            <td className="whitespace-nowrap px-6 py-2">{obj.height}cm</td>
-                            <td className="whitespace-nowrap px-6 py-2">{obj.width}cm</td>
-                            <td className="whitespace-nowrap px-6 py-2">{obj.depth}cm</td>
-                            <td className="whitespace-nowrap px-6 py-2 flex justify-center gap-x-2">
+                          <tr key={index} className="border-b border-slate-700 uppercase text-xs text-gray-800">
+                            <td className="whitespace-nowrap px-0 text-[0.55rem] md:text-sm md:px-2 py-2 font-Courier font-semibold">{obj.code}</td>
+                            <td className="whitespace-nowrap px-0 text-[0.55rem] md:text-sm md:px-2 py-2 hidden sm:table-cell">{obj.carrier?.username ?? "N/A"}</td>
+                            <td className="whitespace-nowrap px-0 text-[0.55rem] md:text-sm md:px-2 py-2">{obj.client.username}</td>
+                            <td className="whitespace-nowrap px-0 text-[0.55rem] md:text-sm md:px-2 py-2">{obj.weight}</td>
+                            <td className="whitespace-nowrap px-0 text-[0.55rem] md:text-sm md:px-2 py-2">{obj.height}</td>
+                            <td className="whitespace-nowrap px-0 text-[0.55rem] md:text-sm md:px-2 py-2">{obj.width}</td>
+                            <td className="whitespace-nowrap px-0 text-[0.55rem] md:text-sm md:px-2 py-2">{obj.depth}</td>
+                            <td className="whitespace-nowrap px-0 text-[0.55rem] md:text-sm md:px-2 py-2 hidden lg:table-cell">{obj.date_joined}</td>
+                            <td className="whitespace-nowrap px-0 text-[0.55rem] md:text-sm md:px-2 py-2 hidden lg:table-cell">{obj.date_delivery > obj.date_joined? obj.date_delivery: '-'}</td>
+                            <td className="whitespace-nowrap px-0 text-[0.55rem] md:text-sm md:px-2 py-2 flex justify-center gap-x-2">
                               <button onClick={() => openModal('put', obj)} className="text-base text-yellow-600 hover:text-yellow-800 transition-colors duration-300"><FaPencilAlt /></button>
                               <button onClick={() => openModal('del', obj)} className="text-lg text-red-600 hover:text-red-800 transition-colors duration-300"><AiFillDelete /></button>
                             </td>
